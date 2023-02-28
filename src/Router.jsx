@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { NAVIGATION_EVENT_TYPE } from './App'
+import { match } from 'path-to-regexp' // Se agrega una librería para abstraernos del uso de regex para el procesamiento de rutas
 
 export function Router ({ routes = [], defaultComponent: DefaultComponent = () => null }) {
   const [currentPath, setCurrentPath] = useState(window.location.pathname)
+  let routeParams = {}
 
   useEffect(() => {
     const onLocationChange = () => {
@@ -18,7 +20,18 @@ export function Router ({ routes = [], defaultComponent: DefaultComponent = () =
     }
   }, [])
 
-  const Component = routes.find(({ path }) => path === currentPath)?.Component
+  const Component = routes.find(({ path }) => {
+    /* `match` devuelve una función que permite comparar rutas
+        además de devolver en un contrato específico los params y otros elementos
+    */
+    const URLMatcher = match(path, { decode: decodeURIComponent })
+    const matched = URLMatcher(currentPath)
 
-  return Component ? <Component /> : <DefaultComponent />
+    if (!matched) return false
+
+    routeParams = matched.params
+    return true
+  })?.Component
+
+  return Component ? <Component params={routeParams} /> : <DefaultComponent />
 }

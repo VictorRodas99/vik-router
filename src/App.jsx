@@ -13,6 +13,10 @@ const ROUTES = [
   {
     path: '/about',
     Component: AboutPage
+  },
+  {
+    path: '/search/:query',
+    Component: ({ params }) => <h4>Se buscó "{params.query}"</h4>
   }
 ]
 
