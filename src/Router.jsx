@@ -1,14 +1,15 @@
 import { useState, useEffect, Children } from 'react'
 import { EVENTS } from './config'
 import { match } from 'path-to-regexp' // Se agrega una librería para abstraernos del uso de regex para el procesamiento de rutas
+import { getCurrentPath } from './utils/router.utils'
 
 export function Router ({ children, routes = [], defaultComponent: DefaultComponent = () => null }) {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname)
+  const [currentPath, setCurrentPath] = useState(getCurrentPath())
   let routeParams = {}
 
   useEffect(() => {
     const onLocationChange = () => {
-      setCurrentPath(window.location.pathname) // Agrega al estado la nueva url que se cambió por el navigate
+      setCurrentPath(getCurrentPath()) // Agrega al estado la nueva url que se cambió por el navigate
     }
 
     window.addEventListener(EVENTS.navigation.pushState, onLocationChange)
