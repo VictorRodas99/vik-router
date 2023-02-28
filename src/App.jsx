@@ -19,9 +19,11 @@ function App () {
     }
 
     window.addEventListener(NAVIGATION_EVENT_TYPE, onLocationChange)
+    window.addEventListener('popstate', onLocationChange) // Escucha el evento de navegación hacia atrás
 
     return () => {
       window.removeEventListener(NAVIGATION_EVENT_TYPE, onLocationChange)
+      window.removeEventListener('popstate', onLocationChange)
     }
   }, [])
 
