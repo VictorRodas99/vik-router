@@ -25,7 +25,7 @@ export function Router ({ children, routes = [], defaultComponent: DefaultCompon
     return isRoute ? props : null
   }) // Leer las props de los Route components que podrían estar dentro del Router component como children
 
-  const routesToUse = routes.concat(routesFromChildren)
+  const routesToUse = routes.concat(routesFromChildren).filter(Boolean)
 
   const Component = routesToUse.find(({ path }) => {
     /* `match` devuelve una función que permite comparar rutas
