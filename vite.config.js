@@ -5,5 +5,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 8000
+  },
+  test: {
+    environment: 'happy-dom',
+    include: 'src/tests/*'
   }
 })
