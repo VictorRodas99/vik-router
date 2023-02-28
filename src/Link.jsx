@@ -8,8 +8,17 @@ export function navigate ({ href }) {
 
 export function Link ({ children, target, to, ...props }) {
   const handleClick = (event) => {
-    event.preventDefault()
-    navigate({ href: to })
+    // Controlar si el usuario hace click al link de una forma diferente
+
+    const isMainEvent = event.button === 0 // click izquierdo
+    const isModifiedEvent = event.metaKey || event.altKey || event.ctrlKey || event.shiftKey // Si se hace click izquierdo sumado a otra tecla especial
+    const isManageableEvent = target === undefined || target === '_self'
+
+    // Si es un click normal se realiza la navegación en SPA
+    if (isMainEvent && !isModifiedEvent && isManageableEvent) {
+      event.preventDefault()
+      navigate({ href: to })
+    }
   }
 
   return (
