@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NAVIGATION_EVENT_TYPE } from './App'
+import { EVENTS } from './config'
 import { match } from 'path-to-regexp' // Se agrega una librería para abstraernos del uso de regex para el procesamiento de rutas
 
 export function Router ({ routes = [], defaultComponent: DefaultComponent = () => null }) {
@@ -11,12 +11,12 @@ export function Router ({ routes = [], defaultComponent: DefaultComponent = () =
       setCurrentPath(window.location.pathname) // Agrega al estado la nueva url que se cambió por el navigate
     }
 
-    window.addEventListener(NAVIGATION_EVENT_TYPE, onLocationChange)
-    window.addEventListener('popstate', onLocationChange) // Escucha el evento de navegación hacia atrás
+    window.addEventListener(EVENTS.navigation.pushState, onLocationChange)
+    window.addEventListener(EVENTS.navigation.popState, onLocationChange) // Escucha el evento de navegación hacia atrás
 
     return () => {
-      window.removeEventListener(NAVIGATION_EVENT_TYPE, onLocationChange)
-      window.removeEventListener('popstate', onLocationChange)
+      window.removeEventListener(EVENTS.navigation.pushState, onLocationChange)
+      window.removeEventListener(EVENTS.navigation.popState, onLocationChange)
     }
   }, [])
 

@@ -3,8 +3,6 @@ import { HomePage, AboutPage } from './components/Page'
 import NotFound from './components/NotFound'
 import { Router } from './Router'
 
-export const NAVIGATION_EVENT_TYPE = 'navigation'
-
 const ROUTES = [
   {
     path: '/',
